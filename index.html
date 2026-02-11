@@ -1,0 +1,1437 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, user-scalable=yes">
+    <title>MCHMonitor · Maternal & Child Health</title>
+    <!-- Google Font & Font Awesome 6 -->
+    <link href="https://fonts.googleapis.com/css2?family=Inter:opsz,wght@14..32,400;14..32,500;14..32,600;14..32,700;14..32,800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Favicon (emoji fallback) -->
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90' fill='%232d6a4f'>👶</text></svg>">
+    <style>
+        /* ---------- GLOBAL RESET & VARIABLES ---------- */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary: #2d6a4f;
+            --primary-dark: #1b4332;
+            --primary-light: #e6f7e6;
+            --gray-50: #f8fafc;
+            --gray-100: #f1f5f9;
+            --gray-200: #e2e8f0;
+            --gray-600: #475569;
+            --gray-800: #1e293b;
+            --gray-900: #0f172a;
+            --shadow-sm: 0 10px 25px -5px rgba(0,0,0,0.05);
+            --shadow-md: 0 20px 40px -12px rgba(0,0,0,0.08);
+            --radius-lg: 24px;
+            --radius-md: 16px;
+            --radius-sm: 12px;
+            --transition: all 0.2s ease;
+        }
+
+        body {
+            font-family: 'Inter', sans-serif;
+            background-color: #ffffff;
+            color: var(--gray-900);
+            line-height: 1.5;
+        }
+
+        .container {
+            max-width: 1280px;
+            margin: 0 auto;
+            padding: 0 24px;
+            width: 100%;
+        }
+
+        /* ---------- TYPOGRAPHY & LINKS ---------- */
+        a {
+            text-decoration: none;
+            color: inherit;
+        }
+
+        .btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            padding: 12px 28px;
+            border-radius: 40px;
+            font-weight: 600;
+            font-size: 16px;
+            border: none;
+            cursor: pointer;
+            transition: var(--transition);
+            background: white;
+            color: var(--gray-900);
+            border: 1px solid var(--gray-200);
+        }
+
+        .btn-primary {
+            background: var(--primary);
+            color: white;
+            border: none;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-dark);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-sm);
+        }
+
+        .btn-outline {
+            background: transparent;
+            border: 1px solid var(--primary);
+            color: var(--primary);
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-light);
+        }
+
+        /* ---------- HEADER – fully responsive ---------- */
+        .site-header {
+            background: white;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.02);
+            position: sticky;
+            top: 0;
+            z-index: 50;
+            backdrop-filter: blur(8px);
+            background: rgba(255,255,255,0.95);
+        }
+
+        .header-content {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            padding: 16px 0;
+            flex-wrap: wrap;
+        }
+
+        .logo {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            font-weight: 700;
+            font-size: 24px;
+            color: var(--primary-dark);
+        }
+
+        .logo i {
+            font-size: 28px;
+            color: var(--primary);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 32px;
+            font-weight: 500;
+            color: var(--gray-600);
+        }
+
+        .nav-links a:hover {
+            color: var(--primary);
+        }
+
+        .mobile-menu-btn {
+            display: none;
+            background: none;
+            border: none;
+            font-size: 24px;
+            color: var(--gray-800);
+            cursor: pointer;
+        }
+
+        /* ---------- HERO SECTION ---------- */
+        .hero {
+            padding: 60px 0 40px;
+            background: linear-gradient(145deg, #ffffff, #fafcfc);
+        }
+
+        .hero-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 48px;
+            align-items: center;
+        }
+
+        .hero-content h1 {
+            font-size: 48px;
+            font-weight: 800;
+            line-height: 1.2;
+            color: var(--gray-900);
+            margin-bottom: 20px;
+        }
+
+        .hero-highlight {
+            color: var(--primary);
+            border-bottom: 4px solid var(--primary-light);
+        }
+
+        .hero-description {
+            font-size: 18px;
+            color: var(--gray-600);
+            margin-bottom: 32px;
+            max-width: 90%;
+        }
+
+        .hero-buttons {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .hero-image {
+            background: var(--primary-light);
+            border-radius: var(--radius-lg);
+            padding: 20px;
+            text-align: center;
+            position: relative;
+        }
+
+        .hero-image img {
+            max-width: 100%;
+            border-radius: var(--radius-md);
+            box-shadow: var(--shadow-md);
+        }
+
+        /* ---------- FEATURES SECTION ---------- */
+        .features {
+            padding: 80px 0;
+            background: white;
+        }
+
+        .section-title {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .section-title h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+        }
+
+        .section-title p {
+            font-size: 18px;
+            color: var(--gray-600);
+            max-width: 600px;
+            margin: 0 auto;
+        }
+
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+            gap: 32px;
+        }
+
+        .feature-card {
+            background: var(--gray-50);
+            padding: 32px 24px;
+            border-radius: var(--radius-md);
+            border: 1px solid var(--gray-200);
+            transition: var(--transition);
+            text-align: center;
+        }
+
+        .feature-card:hover {
+            transform: translateY(-6px);
+            box-shadow: var(--shadow-md);
+            border-color: var(--primary-light);
+        }
+
+        .feature-icon {
+            width: 64px;
+            height: 64px;
+            background: var(--primary-light);
+            border-radius: 20px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 20px;
+            color: var(--primary);
+            font-size: 28px;
+        }
+
+        .feature-card h3 {
+            font-size: 20px;
+            font-weight: 700;
+            margin-bottom: 12px;
+            color: var(--gray-900);
+        }
+
+        .feature-card p {
+            color: var(--gray-600);
+            font-size: 15px;
+        }
+
+        /* ---------- DEMO SECTION – where mockups live ---------- */
+        .demo-section {
+            padding: 60px 0 80px;
+            background: var(--gray-50);
+        }
+
+        .demo-header {
+            text-align: center;
+            margin-bottom: 48px;
+        }
+
+        .demo-header h2 {
+            font-size: 36px;
+            font-weight: 700;
+            color: var(--gray-900);
+            margin-bottom: 16px;
+        }
+
+        .demo-header p {
+            font-size: 18px;
+            color: var(--gray-600);
+            max-width: 700px;
+            margin: 0 auto;
+        }
+
+        .demo-showcase {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 40px;
+            align-items: start;
+        }
+
+        /* ---------- MOTHER DASHBOARD (exact replica from image) – now responsive ---------- */
+        .phone-mockup {
+            max-width: 375px;
+            width: 100%;
+            margin: 0 auto;
+            background: white;
+            border-radius: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.15);
+            overflow: hidden;
+            border: 1px solid #edf2f7;
+            transition: var(--transition);
+        }
+
+        .phone-mockup:hover {
+            box-shadow: 0 30px 60px -12px rgba(45,106,79,0.18);
+        }
+
+        .status-bar {
+            display: flex;
+            justify-content: space-between;
+            padding: 12px 20px;
+            background: white;
+            font-size: 14px;
+            font-weight: 600;
+            color: #1e293b;
+            border-bottom: 1px solid #f1f5f9;
+        }
+
+        .app-header {
+            padding: 16px 20px 8px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .greeting h1 {
+            font-size: 22px;
+            font-weight: 700;
+            color: #0f172a;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .greeting p {
+            font-size: 14px;
+            color: #475569;
+            margin-top: 4px;
+        }
+
+        .notification-badge {
+            background: #f1f5f9;
+            padding: 10px;
+            border-radius: 50%;
+            color: #1e293b;
+            position: relative;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .notification-badge:hover {
+            background: #e2e8f0;
+        }
+
+        .notification-badge::after {
+            content: '';
+            position: absolute;
+            top: 8px;
+            right: 8px;
+            width: 8px;
+            height: 8px;
+            background: #ef4444;
+            border-radius: 50%;
+            border: 2px solid white;
+        }
+
+        .appointment-card {
+            background: linear-gradient(145deg, #2d6a4f, #1b4332);
+            margin: 16px 20px;
+            padding: 20px;
+            border-radius: 20px;
+            color: white;
+            box-shadow: 0 10px 25px rgba(27, 67, 50, 0.25);
+        }
+
+        .appointment-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 12px;
+        }
+
+        .appointment-header span {
+            background: rgba(255,255,255,0.2);
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            text-transform: uppercase;
+        }
+
+        .appointment-details {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+        }
+
+        .appointment-title {
+            font-size: 18px;
+            font-weight: 700;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .appointment-meta-row {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            font-size: 14px;
+            opacity: 0.9;
+            flex-wrap: wrap;
+        }
+
+        .appointment-location {
+            font-size: 14px;
+            opacity: 0.9;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+        }
+
+        .confirm-btn {
+            margin-top: 16px;
+            background: white;
+            color: #1b4332;
+            border: none;
+            padding: 12px;
+            border-radius: 12px;
+            font-weight: 600;
+            font-size: 15px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            cursor: pointer;
+            width: 100%;
+            transition: var(--transition);
+        }
+
+        .confirm-btn:hover {
+            background: #f1f5f9;
+            transform: scale(0.98);
+        }
+
+        .quick-actions {
+            padding: 8px 20px 24px;
+        }
+
+        .section-title {
+            font-size: 18px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 12px;
+        }
+
+        .grid-actions-duo {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 12px;
+        }
+
+        .action-card {
+            background: #f8fafc;
+            border-radius: 16px;
+            padding: 20px 12px;
+            text-align: center;
+            border: 1px solid #e2e8f0;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .action-card:hover {
+            background: white;
+            border-color: var(--primary);
+            box-shadow: var(--shadow-sm);
+            transform: translateY(-2px);
+        }
+
+        .action-card i {
+            font-size: 28px;
+            color: #2d6a4f;
+            margin-bottom: 8px;
+        }
+
+        .action-card span {
+            display: block;
+            font-weight: 600;
+            color: #1e293b;
+            font-size: 15px;
+        }
+
+        .action-card small {
+            font-size: 12px;
+            color: #64748b;
+            margin-top: 4px;
+            display: block;
+        }
+
+        /* ---------- PROVIDER DASHBOARD – now responsive with filter working ---------- */
+        .provider-dashboard {
+            width: 100%;
+            background: white;
+            border-radius: 20px;
+            box-shadow: 0 25px 50px -12px rgba(0,0,0,0.1);
+            border: 1px solid #e2e8f0;
+            display: flex;
+            overflow: hidden;
+            font-size: 14px;
+            transition: var(--transition);
+        }
+
+        .provider-dashboard:hover {
+            box-shadow: 0 30px 60px -12px rgba(0,0,0,0.15);
+        }
+
+        .provider-sidebar {
+            width: 260px;
+            background: #0f172a;
+            color: white;
+            padding: 28px 16px;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .sidebar-logo {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            padding-left: 8px;
+            margin-bottom: 40px;
+        }
+
+        .sidebar-logo i {
+            font-size: 24px;
+            color: #2d6a4f;
+            background: rgba(255,255,255,0.1);
+            padding: 10px;
+            border-radius: 12px;
+        }
+
+        .sidebar-logo span {
+            font-weight: 700;
+            font-size: 18px;
+        }
+
+        .sidebar-nav {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            flex: 1;
+        }
+
+        .nav-item-provider {
+            display: flex;
+            align-items: center;
+            gap: 14px;
+            padding: 12px 16px;
+            border-radius: 12px;
+            color: #cbd5e1;
+            font-weight: 500;
+            transition: var(--transition);
+            cursor: pointer;
+        }
+
+        .nav-item-provider:hover {
+            background: #1e293b;
+            color: white;
+        }
+
+        .nav-item-provider.active {
+            background: #1e293b;
+            color: white;
+        }
+
+        .sidebar-footer {
+            margin-top: auto;
+            padding-top: 20px;
+            border-top: 1px solid #334155;
+        }
+
+        .user-card {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+            background: #1e293b;
+            padding: 16px;
+            border-radius: 16px;
+            margin-bottom: 16px;
+        }
+
+        .user-avatar {
+            width: 48px;
+            height: 48px;
+            background: #2d6a4f;
+            border-radius: 12px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 20px;
+            color: white;
+        }
+
+        .user-info h5 {
+            font-size: 16px;
+            font-weight: 600;
+            color: white;
+        }
+
+        .user-info p {
+            font-size: 13px;
+            color: #94a3b8;
+        }
+
+        .recent-tag {
+            background: #334155;
+            color: white;
+            padding: 8px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .provider-main {
+            flex: 1;
+            background: #ffffff;
+            padding: 24px 28px;
+        }
+
+        .main-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 24px;
+            flex-wrap: wrap;
+            gap: 16px;
+        }
+
+        .header-title h2 {
+            font-size: 24px;
+            font-weight: 700;
+            color: #0f172a;
+            margin-bottom: 6px;
+        }
+
+        .header-title p {
+            color: #475569;
+            font-size: 15px;
+        }
+
+        .header-actions {
+            display: flex;
+            gap: 16px;
+            align-items: center;
+            flex-wrap: wrap;
+        }
+
+        .search-box {
+            display: flex;
+            align-items: center;
+            background: #f1f5f9;
+            border-radius: 30px;
+            padding: 10px 18px;
+            width: 240px;
+            transition: var(--transition);
+        }
+
+        .search-box:focus-within {
+            box-shadow: 0 0 0 3px rgba(45,106,79,0.2);
+            background: white;
+        }
+
+        .search-box i {
+            color: #64748b;
+            margin-right: 10px;
+        }
+
+        .search-box input {
+            border: none;
+            background: transparent;
+            font-size: 15px;
+            width: 100%;
+            outline: none;
+        }
+
+        .btn-new {
+            background: #2d6a4f;
+            color: white;
+            border: none;
+            padding: 12px 24px;
+            border-radius: 30px;
+            font-weight: 600;
+            font-size: 14px;
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .btn-new:hover {
+            background: #1b4332;
+            transform: translateY(-2px);
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(4, 1fr);
+            gap: 18px;
+            margin-bottom: 32px;
+        }
+
+        .stat-card {
+            background: #f8fafc;
+            border-radius: 18px;
+            padding: 20px;
+            border: 1px solid #e2e8f0;
+        }
+
+        .table-container {
+            margin-top: 8px;
+            border: 1px solid #e2e8f0;
+            border-radius: 18px;
+            overflow-x: auto;
+        }
+
+        table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+            min-width: 700px;
+        }
+
+        th {
+            text-align: left;
+            padding: 18px 20px;
+            background: #f8fafc;
+            color: #334155;
+            font-weight: 600;
+            border-bottom: 1px solid #e2e8f0;
+        }
+
+        td {
+            padding: 16px 20px;
+            border-bottom: 1px solid #f1f5f9;
+            color: #1e293b;
+        }
+
+        .patient-cell {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .patient-avatar {
+            width: 40px;
+            height: 40px;
+            border-radius: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 700;
+            color: white;
+        }
+
+        .badge {
+            padding: 6px 14px;
+            border-radius: 50px;
+            font-size: 12px;
+            font-weight: 600;
+            display: inline-block;
+        }
+
+        .badge-success { background: #d1fae5; color: #065f46; }
+        .badge-warning { background: #fef3c7; color: #92400e; }
+        .badge-danger { background: #fee2e2; color: #991b1b; }
+
+        .action-btns {
+            display: flex;
+            gap: 8px;
+        }
+
+        .action-btn {
+            background: transparent;
+            border: none;
+            color: #475569;
+            padding: 6px 12px;
+            border-radius: 20px;
+            font-size: 13px;
+            font-weight: 500;
+            display: flex;
+            align-items: center;
+            gap: 6px;
+            cursor: pointer;
+            transition: var(--transition);
+        }
+
+        .action-btn:hover {
+            background: #f1f5f9;
+            color: var(--primary);
+        }
+
+        /* ---------- FOOTER – fully responsive ---------- */
+        .site-footer {
+            background: var(--gray-900);
+            color: white;
+            padding: 48px 0 32px;
+        }
+
+        .footer-grid {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr 1.5fr;
+            gap: 40px;
+            margin-bottom: 48px;
+        }
+
+        .footer-brand p {
+            color: #94a3b8;
+            margin-top: 16px;
+            font-size: 15px;
+            max-width: 280px;
+        }
+
+        .footer-links h4 {
+            font-size: 16px;
+            font-weight: 600;
+            margin-bottom: 20px;
+            color: white;
+        }
+
+        .footer-links ul {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 12px;
+        }
+
+        .footer-links a {
+            color: #94a3b8;
+            transition: var(--transition);
+        }
+
+        .footer-links a:hover {
+            color: white;
+        }
+
+        .footer-newsletter p {
+            color: #94a3b8;
+            margin-bottom: 20px;
+        }
+
+        .newsletter-form {
+            display: flex;
+            gap: 8px;
+            flex-wrap: wrap;
+        }
+
+        .newsletter-form input {
+            flex: 1;
+            padding: 12px 16px;
+            border-radius: 40px;
+            border: 1px solid #334155;
+            background: transparent;
+            color: white;
+            outline: none;
+        }
+
+        .newsletter-form input::placeholder {
+            color: #64748b;
+        }
+
+        .newsletter-form button {
+            background: var(--primary);
+            border: none;
+            color: white;
+            padding: 12px 24px;
+            border-radius: 40px;
+            font-weight: 600;
+            cursor: pointer;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid #334155;
+            padding-top: 32px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            color: #94a3b8;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 20px;
+        }
+
+        .social-links a {
+            color: #94a3b8;
+            font-size: 18px;
+        }
+
+        .social-links a:hover {
+            color: white;
+        }
+
+        /* ---------- RESPONSIVE MEDIA QUERIES ---------- */
+        @media (max-width: 1024px) {
+            .hero-grid {
+                grid-template-columns: 1fr;
+                text-align: center;
+            }
+            .hero-description {
+                max-width: 100%;
+                margin-left: auto;
+                margin-right: auto;
+            }
+            .hero-buttons {
+                justify-content: center;
+            }
+            .demo-showcase {
+                grid-template-columns: 1fr;
+            }
+            .provider-dashboard {
+                flex-direction: column;
+            }
+            .provider-sidebar {
+                width: 100%;
+            }
+            .stats-grid {
+                grid-template-columns: repeat(2, 1fr);
+            }
+            .footer-grid {
+                grid-template-columns: 1fr 1fr;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .nav-links {
+                display: none;
+            }
+            .mobile-menu-btn {
+                display: block;
+            }
+            .header-content {
+                padding: 12px 0;
+            }
+            .hero h1 {
+                font-size: 36px;
+            }
+            .section-title h2 {
+                font-size: 28px;
+            }
+            .features-grid {
+                grid-template-columns: 1fr;
+            }
+            .stats-grid {
+                grid-template-columns: 1fr;
+            }
+            .footer-grid {
+                grid-template-columns: 1fr;
+                gap: 32px;
+            }
+            .footer-bottom {
+                flex-direction: column;
+                gap: 16px;
+                text-align: center;
+            }
+        }
+
+        @media (max-width: 480px) {
+            .container {
+                padding: 0 16px;
+            }
+            .hero h1 {
+                font-size: 30px;
+            }
+            .hero-buttons {
+                flex-direction: column;
+                width: 100%;
+            }
+            .btn {
+                width: 100%;
+                justify-content: center;
+            }
+            .phone-mockup {
+                border-radius: 24px;
+            }
+        }
+
+        /* ---------- DEMO MODAL / TOAST (simple) ---------- */
+        .demo-toast {
+            position: fixed;
+            bottom: 24px;
+            right: 24px;
+            background: var(--gray-900);
+            color: white;
+            padding: 12px 24px;
+            border-radius: 50px;
+            font-size: 14px;
+            font-weight: 500;
+            box-shadow: var(--shadow-md);
+            display: none;
+            z-index: 999;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .demo-toast.show {
+            display: flex;
+            animation: slideIn 0.3s ease;
+        }
+
+        @keyframes slideIn {
+            from { transform: translateX(100px); opacity: 0; }
+            to { transform: translateX(0); opacity: 1; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- SIMPLE TOAST NOTIFICATION (for demo interactions) -->
+    <div id="demoToast" class="demo-toast">
+        <i class="fas fa-flask"></i> 
+        <span id="toastMessage">Demo interaction</span>
+    </div>
+
+    <!-- HEADER – responsive, sticky -->
+    <header class="site-header">
+        <div class="container header-content">
+            <div class="logo">
+                <i class="fas fa-heartbeat"></i>
+                <span>MCHMonitor</span>
+            </div>
+            <nav class="nav-links">
+                <a href="#">Home</a>
+                <a href="#">Features</a>
+                <a href="#" style="color: var(--primary); font-weight: 600;">Demo</a>
+                <a href="#">Contact</a>
+            </nav>
+            <button class="mobile-menu-btn" onclick="showToast('Mobile menu demo – full version coming soon')">
+                <i class="fas fa-bars"></i>
+            </button>
+        </div>
+    </header>
+
+    <!-- HERO SECTION -->
+    <section class="hero">
+        <div class="container hero-grid">
+            <div class="hero-content">
+                <h1>
+                    <span class="hero-highlight">Maternal & Child</span><br>
+                    Health, Simplified.
+                </h1>
+                <p class="hero-description">
+                    MCHMonitor connects mothers and healthcare providers with smart reminders, 
+                    digital records, and verified health education – designed for Nigeria.
+                </p>
+                <div class="hero-buttons">
+                    <button class="btn btn-primary" onclick="showToast('📱 Try the demo below')">
+                        <i class="fas fa-play"></i> View Demo
+                    </button>
+                    <button class="btn btn-outline" onclick="showToast('📄 Read documentation (mock)')">
+                        <i class="fas fa-book"></i> Documentation
+                    </button>
+                </div>
+            </div>
+            <div class="hero-image">
+                <i class="fas fa-shield-alt" style="font-size: 80px; color: var(--primary); opacity: 0.3; position: absolute; top: 20px; right: 30px;"></i>
+                <div style="background: white; border-radius: 20px; padding: 16px; box-shadow: var(--shadow-sm);">
+                    <div style="display: flex; align-items: center; gap: 16px; margin-bottom: 16px;">
+                        <div style="background: var(--primary-light); padding: 12px; border-radius: 16px;">
+                            <i class="fas fa-check-circle" style="color: var(--primary); font-size: 24px;"></i>
+                        </div>
+                        <div style="text-align: left;">
+                            <h4 style="font-weight: 700; margin-bottom: 4px;">98% reminder delivery</h4>
+                            <p style="color: var(--gray-600); font-size: 14px;">SMS + Push notifications</p>
+                        </div>
+                    </div>
+                    <div style="display: flex; gap: 12px; justify-content: center;">
+                        <span class="badge badge-success">142 active mothers</span>
+                        <span class="badge badge-warning">8 health workers</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FEATURES SECTION -->
+    <section class="features">
+        <div class="container">
+            <div class="section-title">
+                <h2>Designed for real needs</h2>
+                <p>Everything you need to manage maternal and child health journeys – from pregnancy to childhood immunizations.</p>
+            </div>
+            <div class="features-grid">
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-bell"></i></div>
+                    <h3>Smart Reminders</h3>
+                    <p>Automated ANC & immunization alerts via push notification and SMS fallback.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-notes-medical"></i></div>
+                    <h3>Digital Health Records</h3>
+                    <p>Secure, portable records accessible to mothers and providers instantly.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-chart-line"></i></div>
+                    <h3>Provider Dashboard</h3>
+                    <p>Real-time patient adherence tracking and cohort management.</p>
+                </div>
+                <div class="feature-card">
+                    <div class="feature-icon"><i class="fas fa-language"></i></div>
+                    <h3>Localized Content</h3>
+                    <p>Health education in plain English – multilingual support coming.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- DEMO SECTION – LIVE INTERACTIVE MOCKUPS -->
+    <section class="demo-section" id="demo">
+        <div class="container">
+            <div class="demo-header">
+                <h2>See it in action</h2>
+                <p>These are live, interactive prototypes. Click buttons, search patients – experience the flow.</p>
+            </div>
+            <div class="demo-showcase">
+                <!-- Mother Dashboard – fully interactive -->
+                <div>
+                    <h3 style="margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-mobile-alt" style="color: var(--primary);"></i> Mother App
+                    </h3>
+                    <div class="phone-mockup">
+                        <div class="status-bar">
+                            <span>9:41</span>
+                            <span><i class="fas fa-signal"></i> <i class="fas fa-wifi"></i> <i class="fas fa-battery-full"></i></span>
+                        </div>
+                        <div class="app-header">
+                            <div class="greeting">
+                                <h1>Hello, Amina 👩‍🎓</h1>
+                                <p>28 weeks pregnant · Due 15 Aug</p>
+                            </div>
+                            <div class="notification-badge" onclick="showToast('🔔 You have 1 new reminder')">
+                                <i class="far fa-bell"></i>
+                            </div>
+                        </div>
+                        <div class="appointment-card">
+                            <div class="appointment-header">
+                                <span>NEXT VISIT</span>
+                                <i class="fas fa-calendar-check" style="font-size: 20px;"></i>
+                            </div>
+                            <div class="appointment-details">
+                                <div class="appointment-title">
+                                    <i class="fas fa-shield-alt"></i> Antenatal Care (ANC)
+                                </div>
+                                <div class="appointment-meta-row">
+                                    <span><i class="far fa-calendar-alt"></i> Mon, 15 May 2025</span>
+                                    <span><i class="far fa-clock"></i> 10:00 AM</span>
+                                </div>
+                                <div class="appointment-location">
+                                    <i class="fas fa-map-marker-alt"></i> Main PHC, Ikeja
+                                </div>
+                            </div>
+                            <button class="confirm-btn" onclick="showToast('✅ Appointment confirmed! Demo mode.')">
+                                <i class="fas fa-bell"></i> Confirm Appointment
+                            </button>
+                        </div>
+                        <div class="quick-actions">
+                            <div class="section-title">Quick Actions</div>
+                            <div class="grid-actions-duo">
+                                <div class="action-card" onclick="showToast('📅 View appointments (demo)')">
+                                    <i class="fas fa-calendar-plus"></i>
+                                    <span>Appointments</span>
+                                    <small>Schedule, view</small>
+                                </div>
+                                <div class="action-card" onclick="showToast('❤️ Log health metrics (demo)')">
+                                    <i class="fas fa-heartbeat"></i>
+                                    <span>Log Health</span>
+                                    <small>BP, weight, kicks</small>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Provider Dashboard – with working search filter -->
+                <div>
+                    <h3 style="margin-bottom: 20px; font-weight: 700; display: flex; align-items: center; gap: 8px;">
+                        <i class="fas fa-desktop" style="color: var(--primary);"></i> Provider Dashboard
+                    </h3>
+                    <div class="provider-dashboard">
+                        <div class="provider-sidebar">
+                            <div class="sidebar-logo">
+                                <i class="fas fa-heartbeat"></i>
+                                <span>MCHMonitor</span>
+                            </div>
+                            <div class="sidebar-nav">
+                                <div class="nav-item-provider active" onclick="showToast('📊 Dashboard view (demo)')">
+                                    <i class="fas fa-th-large"></i> Dashboard
+                                </div>
+                                <div class="nav-item-provider" onclick="showToast('👥 Patient list (demo)')">
+                                    <i class="fas fa-users"></i> Patients
+                                </div>
+                                <div class="nav-item-provider" onclick="showToast('📅 Appointments (demo)')">
+                                    <i class="fas fa-calendar-alt"></i> Appointments
+                                </div>
+                                <div class="nav-item-provider" onclick="showToast('📈 Reports (demo)')">
+                                    <i class="fas fa-chart-bar"></i> Reports
+                                </div>
+                                <div class="nav-item-provider" onclick="showToast('✉️ Messages (demo)')">
+                                    <i class="fas fa-envelope"></i> Messages
+                                </div>
+                                <div class="nav-item-provider" onclick="showToast('⚙️ Settings (demo)')">
+                                    <i class="fas fa-cog"></i> Settings
+                                </div>
+                                <div class="nav-item-provider" onclick="showToast('❓ Help (demo)')">
+                                    <i class="fas fa-question-circle"></i> Help
+                                </div>
+                            </div>
+                            <div class="sidebar-footer">
+                                <div class="user-card">
+                                    <div class="user-avatar">
+                                        <i class="fas fa-user-nurse"></i>
+                                    </div>
+                                    <div class="user-info">
+                                        <h5>Nurse Bimbo</h5>
+                                        <p>Main PHC, Ikeja</p>
+                                    </div>
+                                </div>
+                                <div class="recent-tag" onclick="showToast('👤 Chidinma – last seen 2h ago')">
+                                    <i class="fas fa-user-clock"></i> Chidinma · 2h ago
+                                </div>
+                            </div>
+                        </div>
+                        <div class="provider-main">
+                            <div class="main-header">
+                                <div class="header-title">
+                                    <h2>Patient Management</h2>
+                                    <p>Monitor and manage your assigned mothers</p>
+                                </div>
+                                <div class="header-actions">
+                                    <div class="search-box">
+                                        <i class="fas fa-search"></i>
+                                        <input type="text" id="patientSearchInput" placeholder="Search patient..." onkeyup="filterPatientTable()" value="">
+                                    </div>
+                                    <button class="btn-new" onclick="showToast('➕ New patient form (demo)')">
+                                        <i class="fas fa-plus-circle"></i> New Patient
+                                    </button>
+                                </div>
+                            </div>
+                            <div class="stats-grid">
+                                <div class="stat-card">
+                                    <div class="stat-header"><span>Total Patients</span><div class="stat-icon"><i class="fas fa-user-friends"></i></div></div>
+                                    <div class="stat-value">142</div>
+                                    <div class="stat-trend trend-up"><i class="fas fa-arrow-up"></i> +12 this month</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-header"><span>Appointments Today</span><div class="stat-icon"><i class="fas fa-calendar-check"></i></div></div>
+                                    <div class="stat-value">18</div>
+                                    <div class="stat-trend trend-down"><i class="fas fa-arrow-down"></i> 6 remaining</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-header"><span>Missed / Defaulters</span><div class="stat-icon"><i class="fas fa-exclamation-triangle"></i></div></div>
+                                    <div class="stat-value">8</div>
+                                    <div class="stat-trend trend-down"><i class="fas fa-arrow-down"></i> -2 vs last week</div>
+                                </div>
+                                <div class="stat-card">
+                                    <div class="stat-header"><span>Upcoming Deliveries</span><div class="stat-icon"><i class="fas fa-baby"></i></div></div>
+                                    <div class="stat-value">12</div>
+                                    <div class="stat-trend"><i class="fas fa-calendar"></i> Next 30 days</div>
+                                </div>
+                            </div>
+                            <div class="table-container">
+                                <table id="patientTable">
+                                    <thead>
+                                        <tr>
+                                            <th>Patient</th>
+                                            <th>Contact</th>
+                                            <th>Last Visit</th>
+                                            <th>Next Due</th>
+                                            <th>Status</th>
+                                            <th>Actions</th>
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        <tr>
+                                            <td><div class="patient-cell"><div class="patient-avatar" style="background: #2563eb;">AO</div><div><div class="patient-name">Ama Okonkwo</div><div class="patient-detail">28 wks · #MCH-3421</div></div></div></td>
+                                            <td>0803 456 7890</td>
+                                            <td>12 Apr 2025</td>
+                                            <td>15 May 2025 (ANC)</td>
+                                            <td><span class="badge badge-success">On Track</span></td>
+                                            <td><div class="action-btns"><button class="action-btn" onclick="showToast('👁️ View Ama (demo)')"><i class="fas fa-eye"></i> View</button><button class="action-btn" onclick="showToast('📅 Schedule for Ama (demo)')"><i class="fas fa-calendar-plus"></i> Schedule</button></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="patient-cell"><div class="patient-avatar" style="background: #b45309;">FE</div><div><div class="patient-name">Fatima Eze</div><div class="patient-detail">34 wks · #MCH-2890</div></div></div></td>
+                                            <td>0701 234 5678</td>
+                                            <td>05 Apr 2025</td>
+                                            <td>18 May 2025 (ANC)</td>
+                                            <td><span class="badge badge-warning">Due Follow-up</span></td>
+                                            <td><div class="action-btns"><button class="action-btn" onclick="showToast('👁️ View Fatima (demo)')"><i class="fas fa-eye"></i> View</button><button class="action-btn" onclick="showToast('📅 Schedule for Fatima (demo)')"><i class="fas fa-calendar-plus"></i> Schedule</button></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="patient-cell"><div class="patient-avatar" style="background: #0f172a;">CO</div><div><div class="patient-name">Chidinma Okafor</div><div class="patient-detail">16 wks · #MCH-4012</div></div></div></td>
+                                            <td>0906 789 1234</td>
+                                            <td>22 Apr 2025</td>
+                                            <td>20 May 2025 (ANC)</td>
+                                            <td><span class="badge badge-success">On Track</span></td>
+                                            <td><div class="action-btns"><button class="action-btn" onclick="showToast('👁️ View Chidinma (demo)')"><i class="fas fa-eye"></i> View</button><button class="action-btn" onclick="showToast('📅 Schedule for Chidinma (demo)')"><i class="fas fa-calendar-plus"></i> Schedule</button></div></td>
+                                        </tr>
+                                        <tr>
+                                            <td><div class="patient-cell"><div class="patient-avatar" style="background: #991b1b;">BA</div><div><div class="patient-name">Blessing Adeyemi</div><div class="patient-detail">6w pp · #MCH-3785</div></div></div></td>
+                                            <td>0812 345 6789</td>
+                                            <td>10 Mar 2025</td>
+                                            <td>25 May 2025 (Imm)</td>
+                                            <td><span class="badge badge-danger">Missed (2)</span></td>
+                                            <td><div class="action-btns"><button class="action-btn" onclick="showToast('👁️ View Blessing (demo)')"><i class="fas fa-eye"></i> View</button><button class="action-btn" onclick="showToast('📅 Schedule for Blessing (demo)')"><i class="fas fa-calendar-plus"></i> Schedule</button></div></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                            <div style="display: flex; justify-content: flex-end; margin-top: 16px; color: #475569; font-size: 13px;">
+                                <span id="patientCount">Showing 4 of 142 patients</span>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- FOOTER – fully responsive -->
+    <footer class="site-footer">
+        <div class="container">
+            <div class="footer-grid">
+                <div class="footer-brand">
+                    <div class="logo" style="color: white;">
+                        <i class="fas fa-heartbeat"></i>
+                        <span>MCHMonitor</span>
+                    </div>
+                    <p>Open-source maternal health tracking for Nigeria. Built with ❤️ by the MCH team.</p>
+                </div>
+                <div class="footer-links">
+                    <h4>Product</h4>
+                    <ul>
+                        <li><a href="#" onclick="showToast('Features (demo)')">Features</a></li>
+                        <li><a href="#" onclick="showToast('Pricing (demo)')">Pricing</a></li>
+                        <li><a href="#" onclick="showToast('Demo (demo)')">Demo</a></li>
+                    </ul>
+                </div>
+                <div class="footer-links">
+                    <h4>Resources</h4>
+                    <ul>
+                        <li><a href="#" onclick="showToast('Documentation (demo)')">Documentation</a></li>
+                        <li><a href="#" onclick="showToast('API (demo)')">API</a></li>
+                        <li><a href="#" onclick="showToast('GitHub (demo)')">GitHub</a></li>
+                    </ul>
+                </div>
+                <div class="footer-newsletter">
+                    <h4>Stay updated</h4>
+                    <p>Get news about maternal health tech in Nigeria.</p>
+                    <div class="newsletter-form">
+                        <input type="email" placeholder="Your email" onclick="showToast('📧 Demo newsletter')">
+                        <button onclick="showToast('✉️ Subscribed (demo)')">Subscribe</button>
+                    </div>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>© 2026 MCHMonitor. MIT License. Academic project.</p>
+                <div class="social-links">
+                    <a href="#" onclick="showToast('🐦 Twitter (demo)')"><i class="fab fa-twitter"></i></a>
+                    <a href="#" onclick="showToast('📘 GitHub (demo)')"><i class="fab fa-github"></i></a>
+                    <a href="#" onclick="showToast('💼 LinkedIn (demo)')"><i class="fab fa-linkedin"></i></a>
+                </div>
+            </div>
+        </div>
+    </footer>
+
+    <script>
+        // ---------- DEMO TOAST ----------
+        function showToast(message) {
+            const toast = document.getElementById('demoToast');
+            const toastMsg = document.getElementById('toastMessage');
+            toastMsg.textContent = message;
+            toast.classList.add('show');
+            setTimeout(() => {
+                toast.classList.remove('show');
+            }, 3000);
+        }
+
+        // ---------- WORKING PATIENT SEARCH FILTER (50% functionality) ----------
+        function filterPatientTable() {
+            const input = document.getElementById('patientSearchInput');
+            const filter = input.value.toLowerCase();
+            const table = document.getElementById('patientTable');
+            const rows = table.getElementsByTagName('tbody')[0].getElementsByTagName('tr');
+            let visibleCount = 0;
+
+            for (let i = 0; i < rows.length; i++) {
+                const nameCell = rows[i].getElementsByTagName('td')[0];
+                if (nameCell) {
+                    const patientName = nameCell.textContent || nameCell.innerText;
+                    if (patientName.toLowerCase().indexOf(filter) > -1) {
+                        rows[i].style.display = '';
+                        visibleCount++;
+                    } else {
+                        rows[i].style.display = 'none';
+                    }
+                }
+            }
+            document.getElementById('patientCount').innerText = `Showing ${visibleCount} of 142 patients`;
+        }
+
+        // Initialize count on page load
+        window.onload = function() {
+            filterPatientTable(); // ensure count is correct
+        };
+    </script>
+</body>
+</html>
